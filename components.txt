@@ -1,0 +1,4 @@
+Required Software Components:
+	= Custom bootloader
+	= Application software based on FreeRTOS
+	= Peripheral Drivers (we'll write these ourselves)
