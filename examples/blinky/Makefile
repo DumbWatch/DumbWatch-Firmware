@@ -1,6 +1,4 @@
-#
-# Makefile for DumbWatch Bootloader
-#
+include ../../common/Makefile.common
 
 NORDIC_COMMON = ../../nordic
 
@@ -10,25 +8,6 @@ AS_OBJS = \
 CXX_OBJS = \
 	$(NORDIC_COMMON)/startup/startup_nrf52.o \
 	blinky.o
-
-AS = arm-none-eabi-gcc
-CC 	= arm-none-eabi-gcc
-CXX	= arm-none-eabi-g++
-LD	= arm-none-eabi-gcc
-OBJDUMP = arm-none-eabi-objdump
-OBJCOPY = arm-none-eabi-objcopy
-
-CXXFLAGS += -std=c++17 -Wall -Wextra -Wconversion -Werror
-CXXFLAGS += -ffreestanding -march=armv7e-m -mthumb
-CXXFLAGS += -Og -g3 -ggdb
-CXXFLAGS += -fno-exceptions -fno-rtti -fno-stack-protector
-CXXFLAGS += -I$(NORDIC_COMMON)/include
-CXXFLAGS += -I./
-CXXFLAGS += -DBOOTLOADER
-
-ASFLAGS += -march=armv7e-m
-
-LDFLAGS += -T nrf52_xxaa.ld -nostdlib -L$(NORDIC_COMMON)/ld
 
 ELF_IMAGE = blinky.elf
 
