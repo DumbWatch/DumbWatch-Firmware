@@ -11,4 +11,4 @@ MEMORY
 }
 
 
-INCLUDE "nrf_common.ld"
+INCLUDE "nrf52_common.ld"

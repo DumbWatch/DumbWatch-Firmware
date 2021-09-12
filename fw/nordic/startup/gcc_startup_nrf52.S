@@ -16,31 +16,16 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-NOTICE: This file has been modified by Nordic Semiconductor ASA.
+NOTICE: This file has been modified by Nordic Semiconductor ASA. and Jesse Buhagiar
 
 */
 
     .syntax unified
     .arch armv7e-m
 
-#ifdef __STARTUP_CONFIG
-#include "startup_config.h"
-#ifndef __STARTUP_CONFIG_STACK_ALIGNEMENT
-#define __STARTUP_CONFIG_STACK_ALIGNEMENT 3
-#endif
-#endif
-
     .section .stack
-#if defined(__STARTUP_CONFIG)
-    .align __STARTUP_CONFIG_STACK_ALIGNEMENT
-    .equ    Stack_Size, __STARTUP_CONFIG_STACK_SIZE
-#elif defined(__STACK_SIZE)
-    .align 3
-    .equ    Stack_Size, __STACK_SIZE
-#else
     .align 3
     .equ    Stack_Size, 4096
-#endif
     .globl __StackTop
     .globl __StackLimit
 __StackLimit:
@@ -51,13 +36,7 @@ __StackTop:
 
     .section .heap
     .align 3
-#if defined(__STARTUP_CONFIG)
-    .equ Heap_Size, __STARTUP_CONFIG_HEAP_SIZE
-#elif defined(__HEAP_SIZE)
-    .equ Heap_Size, __HEAP_SIZE
-#else
     .equ Heap_Size, 4096
-#endif
     .globl __HeapBase
     .globl __HeapLimit
 __HeapBase:
@@ -276,10 +255,7 @@ Reset_Handler:
 /* Call _start function provided by libraries.
  * If those libraries are not accessible, define __START as your entry point.
  */
-#ifndef __START
-#define __START _start
-#endif
-    bl __START
+    bl _start
 
     .pool
     .size   Reset_Handler,.-Reset_Handler
