@@ -2,7 +2,7 @@
 # Makefile for DumbWatch Bootloader
 #
 
-NORDIC_COMMON = ../nordic
+NORDIC_COMMON = ../../nordic
 
 AS_OBJS = \
 	$(NORDIC_COMMON)/startup/gcc_startup_nrf52.o
