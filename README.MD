@@ -19,8 +19,6 @@ worked on. For example, fixing a bug in the bootloader would be something like `
 ## Required Tools
 [Nordic Command line tools](https://www.nordicsemi.com/Products/Development-tools/nRF-Command-Line-Tools/Download#infotabs)
 
-[J-Link Tools](https://www.segger.com/downloads/jlink/)
-
 [pynrfjprog](https://github.com/NordicSemiconductor/pynrfjprog)
 
 
