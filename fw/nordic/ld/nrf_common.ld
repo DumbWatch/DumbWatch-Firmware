@@ -1,6 +1,4 @@
-/* Deprecated linker script for Nordic Semiconductor nRF52 devices,
- * please use nrfx_common.ld. This version exists for backwards 
- * compatibility.
+/* Linker script for Nordic Semiconductor nRF devices
  *
  * Version: Sourcery G++ 4.5-1
  * Support: https://support.codesourcery.com/GNUToolchain/
@@ -135,7 +133,7 @@ SECTIONS
         . = ALIGN(4);
         __bss_end__ = .;
     } > RAM
-
+    
     .heap (COPY):
     {
         __HeapBase = .;

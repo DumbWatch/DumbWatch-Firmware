@@ -28,7 +28,7 @@ CXXFLAGS += -DBOOTLOADER
 
 ASFLAGS += -march=armv7e-m
 
-LDFLAGS += -T $(NORDIC_COMMON)/ld/nrf52_xxaa.ld -nostdlib -L$(NORDIC_COMMON)/ld
+LDFLAGS += -T nrf52_xxaa.ld -nostdlib -L$(NORDIC_COMMON)/ld
 
 ELF_IMAGE = boot.elf
 
