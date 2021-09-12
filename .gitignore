@@ -31,3 +31,7 @@
 *.out
 *.app
 *.elf
+
+# Other things
+toolchain/*
+!toolchain/get_me.sh
