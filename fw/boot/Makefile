@@ -9,7 +9,7 @@ AS_OBJS = \
 	
 CXX_OBJS = \
 	$(NORDIC_COMMON)/startup/startup_nrf52.o \
-	start.o
+	main.o
 
 AS = arm-none-eabi-gcc
 CC 	= arm-none-eabi-gcc

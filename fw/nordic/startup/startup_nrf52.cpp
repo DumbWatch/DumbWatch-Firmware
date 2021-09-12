@@ -16,6 +16,8 @@ WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+Modifications (c) 2021 Jesse Buhagiar
+
 */
 
 #include <nrf52.h>
@@ -30,6 +32,8 @@ limitations under the License.
     uint32_t SystemCoreClock __attribute__((used)) = __SYSTEM_CLOCK_64M;
 #endif
 
+extern "C" int main(void);
+
 extern "C" void SystemCoreClockUpdate(void)
 {
     SystemCoreClock = __SYSTEM_CLOCK_64M;
@@ -38,4 +42,14 @@ extern "C" void SystemCoreClockUpdate(void)
 extern "C" void SystemInit(void)
 {
 	SystemCoreClockUpdate();
+}
+
+extern "C" void _start(void)
+{
+    static_cast<void>(main()); // Call main with no arguments and discard return value
+
+    for(;;)
+    {
+        __asm__ volatile("wfi"); // Spin forever if we return from main (however that happens...)
+    }
 }
