@@ -35,3 +35,14 @@
 # Other things
 toolchain/*
 !toolchain/get_me.sh
+
+# VSCode stuff
+.vscode\settings.json
+
+# QtCreator files
+*.cflags
+*.config
+*.creator
+*.cxxflags
+*.files
+*.includes

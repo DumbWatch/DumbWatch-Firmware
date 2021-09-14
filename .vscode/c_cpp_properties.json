@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "arm-none-eabi",
+            "includePath": [
+                "${workspaceFolder}\\nordic\\include",
+                "${workspaceFolder}\\toolchain\\arm-none-eabi\\include",
+                "${workspaceFolder}\\fw\\**",
+                "${workspaceFolder}\\drivers\\**"
+            ],
+            "defines": [],
+            "windowsSdkVersion": "10.0.18362.0",
+            "compilerPath": "${workspaceFolder}\\toolchain\\bin\\arm-none-eabi-gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-arm"
+        }
+    ],
+    "version": 4
+}

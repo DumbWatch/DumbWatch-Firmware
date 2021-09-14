@@ -21,6 +21,11 @@ worked on. For example, fixing a bug in the bootloader would be something like `
 
 [pynrfjprog](https://github.com/NordicSemiconductor/pynrfjprog)
 
+## Recommended VSCode plugins
+- `Cortex-Debug`
+- `ARM Syntax Highlighting`
+- `Linker Script`
+
 
 ## How do I build this hunk of junk?
 TODO
