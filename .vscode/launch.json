@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "./examples/blinky/blinky.elf",
+            "name": "Debug Microcontroller",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "serverpath": "C:/Program Files (x86)/SEGGER/JLink/JLinkGDBServerCL.exe",
+            "armToolchainPath": "E:/VSARM/armcc/bin",
+            "device": "nRF52832_xxAA",
+            "interface": "swd",
+            "serialNumber": "801036265",
+            "runToMain": true,
+            "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
+
+        }
+    ]
+}

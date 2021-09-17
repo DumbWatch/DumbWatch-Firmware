@@ -5,7 +5,7 @@
 #include <nrf52_bitfields.h>
 #include <cstdint>
 
-static constexpr uint16_t COUNTER_RESET_VALUE = 0xABCD;
+static constexpr uint32_t COUNTER_RESET_VALUE = 0xFFFFF;
 
 int main(void)
 {
@@ -18,7 +18,7 @@ int main(void)
     // Set Pin17 as output
     NRF_P0->DIR |=          (GPIO_DIR_PIN17_Output << GPIO_DIR_PIN17_Pos);
     
-    uint16_t counter = COUNTER_RESET_VALUE;
+    uint32_t counter = COUNTER_RESET_VALUE;
     for(;;)
     {
         // Set Pin17 HIGH
