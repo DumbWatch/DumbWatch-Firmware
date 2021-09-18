@@ -23,8 +23,6 @@ protected:
     IRQHandler(uint8_t irq_number);
 
 private:
-    static void  Default_Handler();
-
     uint8_t m_irq_number { 0 };
 };
 

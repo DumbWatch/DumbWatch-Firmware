@@ -22,9 +22,10 @@ IRQHandler::~IRQHandler()
     NVIC_DisableIRQ(static_cast<IRQn_Type>(m_irq_number));
 }
 
-void IRQHandler::Default_Handler()
+extern "C" void Default_Handler()
 {
     auto irqn = SCB->ICSR & SCB_ICSR_VECTACTIVE_Msk;
+    irqn -= 16;
     auto* handler = s_handlers[irqn];
     
     if (handler != nullptr)
