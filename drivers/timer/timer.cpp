@@ -13,6 +13,9 @@ void Timer::handle_irq()
     if ((m_peripheral->EVENTS_COMPARE[0] != 0) && ((m_peripheral->INTENSET & TIMER_INTENSET_COMPARE0_Msk) != 0))
     {
         m_peripheral->EVENTS_COMPARE[0] = 0UL;
+
+        if (m_callback != nullptr)
+            m_callback();
     }
 }
 

@@ -6,6 +6,8 @@
 
 #include <cstdint>
 
+typedef void (*isr_callback)(void);
+
 namespace NRF52
 {
 
