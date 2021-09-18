@@ -22,7 +22,7 @@ OBJCOPY = arm-none-eabi-objcopy
 CXXFLAGS += -std=c++14 -Wall -Wextra -Wconversion -Werror
 CXXFLAGS += -ffreestanding -march=armv7e-m -mthumb
 CXXFLAGS += -Og -g3 -ggdb
-CXXFLAGS += -fno-exceptions -fno-rtti -fno-stack-protector
+CXXFLAGS += -fno-exceptions -fno-rtti -fno-stack-protector -fno-use-cxa-atexit
 CXXFLAGS += -I$(NORDIC_COMMON)/include
 CXXFLAGS += -I./
 CXXFLAGS += -I../../
