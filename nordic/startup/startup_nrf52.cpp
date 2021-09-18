@@ -44,9 +44,80 @@ extern "C" void SystemInit(void)
 	SystemCoreClockUpdate();
 }
 
+extern "C" int main(void);
+
+extern uint32_t __etext;
+extern uint32_t __data_start__;
+extern uint32_t __data_end__;
+
+extern uint32_t __bss_start__;
+extern uint32_t __bss_end__;
+
+typedef void (*func_ptr_t)();
+
+extern func_ptr_t __preinit_array_start[];
+extern func_ptr_t __preinit_array_end[];
+extern func_ptr_t __init_array_start[];
+extern func_ptr_t __init_array_end[];
+extern func_ptr_t __fini_array_start[];
+extern func_ptr_t __fini_array_end[];
+
+static void _copy_data_section()
+{
+    uint32_t* dest_word  = &__data_start__;
+    uint32_t* load_word = &__etext;
+    while(dest_word < &__data_end__)
+    {
+        *dest_word++ = *load_word++;
+    }
+}
+
+static void _zero_bss()
+{
+    uint32_t* curr_address = &__bss_start__;
+    while(curr_address < &__bss_end__)
+    {
+        *curr_address++ = 0u;
+    }
+}
+
+static void _cxx_global_ctors()
+{
+    unsigned count = __preinit_array_end - __preinit_array_start;
+    for (auto idx = 0u; idx < count; idx++)
+    {
+        func_ptr_t ctor = __preinit_array_start[idx];
+        (*ctor)();
+    }
+
+    count = __init_array_end - __init_array_start;
+    for (auto idx = 0u; idx < count; idx++)
+    {
+        func_ptr_t ctor = __init_array_start[idx];
+        (*ctor)();
+    }
+}
+
+static void _cxx_global_dtors()
+{
+    unsigned count = __init_array_end - __init_array_start;
+    for (auto idx = 0u; idx < count; idx++)
+    {
+        func_ptr_t dtor = __init_array_start[idx];
+        (*dtor)();
+    }
+}
+
+
 extern "C" void _start(void)
 {
+    _copy_data_section();   // Copy data section from image to SRAM
+    _zero_bss();            // Zero out BSS section
+    _cxx_global_ctors();    // Call all global constructors
+
     static_cast<void>(main()); // Call main with no arguments and discard return value
+
+    _cxx_global_dtors();    // Call all global destructors
 
     for(;;)
     {

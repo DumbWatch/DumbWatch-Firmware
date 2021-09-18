@@ -330,12 +330,7 @@ SysTick_Handler:
 
 /* IRQ Handlers */
 
-    .weak   Default_Handler
-    .globl  Default_Handler
-    .type   Default_Handler, %function
-Default_Handler:
-    b       .
-    .size   Default_Handler, . - Default_Handler
+    .extern Default_Handler
 
     .macro  IRQ handler
     .weak   \handler
