@@ -53,3 +53,11 @@ extern "C" void _start(void)
         __asm__ volatile("wfi"); // Spin forever if we return from main (however that happens...)
     }
 }
+
+extern "C" void _fini(void)
+{
+    for(;;)
+    {
+        __asm__ volatile("wfi");
+    }
+}
