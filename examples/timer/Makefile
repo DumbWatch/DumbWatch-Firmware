@@ -24,3 +24,7 @@ clean:
 	rm -rf $(CXX_OBJS)
 	rm -rf $(AS_OBJS)
 	rm -rf $(ELF_IMAGE)
+
+flash:
+	nrfjprog -f nrf52 --program $(ELF_IMAGE) --sectorerase
+	nrfjprog -f nrf52 --reset
