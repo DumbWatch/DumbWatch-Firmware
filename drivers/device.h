@@ -16,6 +16,8 @@ enum class DeviceStatus : int32_t
     SUCCESS = 0,
     INVALID_PARAMETER = -1,
     DEVICE_BUSY = -2,
+    ALREADY_INITIALIZED = -3,
+    NOT_INITIALIZED = -4,
 };
 
 //
@@ -32,9 +34,11 @@ public:
     virtual DeviceStatus uninitialize() = 0;
     
     uint32_t base_address() const { return m_base_address; }
+    bool initialized() const { return m_initialized; }
 
 protected:
     uint32_t m_base_address { 0 }; // Device base address
+    bool m_initialized { false };
 };
 
 }

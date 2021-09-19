@@ -21,6 +21,12 @@ void Timer::handle_irq()
 
 DeviceStatus Timer::initialize()
 {
+    if (m_running)
+        return DeviceStatus::DEVICE_BUSY;
+
+    if (m_initialized)
+        return DeviceStatus::ALREADY_INITIALIZED;
+
     // Stop the timer
     stop();
 
@@ -41,12 +47,18 @@ DeviceStatus Timer::uninitialize()
 
 void Timer::start()
 {
+    if (!m_initialized)
+        return DeviceStatus::NOT_INITIALIZED;
+
     m_peripheral->TASKS_START = 1UL;
     m_running = true;
 }
 
 void Timer::stop()
 {
+    if (!m_initialized)
+        return DeviceStatus::NOT_INITIALIZED;
+
     m_peripheral->TASKS_STOP = 1UL;
     m_running = false;
 }
