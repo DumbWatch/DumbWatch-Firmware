@@ -38,8 +38,8 @@ public:
     void handle_irq() override;
 
     // Timer specific functions
-    void start();
-    void stop();
+    DeviceStatus start();
+    DeviceStatus stop();
 
     template<typename T>
     void set_max_ticks(T max_ticks);

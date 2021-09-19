@@ -45,7 +45,7 @@ DeviceStatus Timer::uninitialize()
     return DeviceStatus::SUCCESS;
 }
 
-void Timer::start()
+DeviceStatus Timer::start()
 {
     if (!m_initialized)
         return DeviceStatus::NOT_INITIALIZED;
@@ -54,7 +54,7 @@ void Timer::start()
     m_running = true;
 }
 
-void Timer::stop()
+DeviceStatus Timer::stop()
 {
     if (!m_initialized)
         return DeviceStatus::NOT_INITIALIZED;
