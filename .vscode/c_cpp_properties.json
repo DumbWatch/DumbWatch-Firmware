@@ -3,6 +3,7 @@
         {
             "name": "arm-none-eabi",
             "includePath": [
+                "${workspaceFolder}",
                 "${workspaceFolder}\\nordic\\include",
                 "${workspaceFolder}\\toolchain\\arm-none-eabi\\include",
                 "${workspaceFolder}\\fw\\**",

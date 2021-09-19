@@ -7,7 +7,7 @@
         {
             "cwd": "${workspaceRoot}",
             "executable": "./examples/blinky/blinky.elf",
-            "name": "Debug Microcontroller",
+            "name": "Run Blinky Test",
             "request": "launch",
             "type": "cortex-debug",
             "servertype": "jlink",
@@ -18,7 +18,21 @@
             "serialNumber": "801036265",
             "runToMain": true,
             "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
-
-        }
+        },
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "./examples/timer/timer.elf",
+            "name": "Run Timer Test",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "serverpath": "C:/Program Files (x86)/SEGGER/JLink/JLinkGDBServerCL.exe",
+            "armToolchainPath": "E:/VSARM/armcc/bin",
+            "device": "nRF52832_xxAA",
+            "interface": "swd",
+            "serialNumber": "801036265",
+            "runToMain": true,
+            "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
+        },
     ]
 }
