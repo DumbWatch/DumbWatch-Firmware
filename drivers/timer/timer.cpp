@@ -63,8 +63,17 @@ DeviceStatus Timer::stop()
     m_running = false;
 }
 
-DeviceStatus Timer::set_bitmode([[maybe_unused]] BitMode mode)
+DeviceStatus Timer::set_bitmode(BitMode mode)
 {
+    if (!m_initialized)
+        return DeviceStatus::NOT_INITIALIZED;
+
+    if (m_running)
+        return DeviceStatus::DEVICE_BUSY;
+    
+    m_peripheral->BITMODE &= ~TIMER_BITMODE_BITMODE_Msk;
+    m_peripheral->BITMODE |= static_cast<uint8_t>(mode);
+    
     return DeviceStatus::SUCCESS;
 }
 
