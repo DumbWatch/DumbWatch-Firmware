@@ -2,6 +2,8 @@
  *
  */
 
+#pragma once
+
 #include <nrf52.h>
 #include <cstdint>
 #include <cstdlib>
