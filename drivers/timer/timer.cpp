@@ -44,7 +44,7 @@ DeviceStatus Timer::initialize()
 
 DeviceStatus Timer::uninitialize()
 {
-    return DeviceStatus::SUCCESS;
+    return DeviceStatus::UNIMPLEMENTED;
 }
 
 DeviceStatus Timer::start()

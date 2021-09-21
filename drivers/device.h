@@ -18,6 +18,7 @@ enum class DeviceStatus : int32_t
     DEVICE_BUSY = -2,
     ALREADY_INITIALIZED = -3,
     NOT_INITIALIZED = -4,
+    UNIMPLEMENTED = -5,
 };
 
 //

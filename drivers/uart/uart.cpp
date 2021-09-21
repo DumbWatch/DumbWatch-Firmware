@@ -81,7 +81,7 @@ DeviceStatus UART::initialize()
 
 DeviceStatus UART::uninitialize()
 {
-    return DeviceStatus::SUCCESS;
+    return DeviceStatus::UNIMPLEMENTED;
 }
 
 DeviceStatus UART::send(const uint8_t* data, size_t count)
@@ -104,12 +104,12 @@ DeviceStatus UART::send(const uint8_t* data, size_t count)
 
 DeviceStatus UART::receive(uint8_t*, size_t)
 {
-    return DeviceStatus::SUCCESS;
+    return DeviceStatus::UNIMPLEMENTED;
 }
 
 DeviceStatus UART::transceive(const uint8_t*, uint8_t*, size_t)
 {
-    return DeviceStatus::SUCCESS;
+    return DeviceStatus::UNIMPLEMENTED;
 }
 
 void UART::handle_irq()
