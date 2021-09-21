@@ -101,6 +101,20 @@ DeviceStatus UART::initialize()
 
 DeviceStatus UART::uninitialize()
 {
+    // Stop any currently active transmissions
+    abort();
+
+    // Clear events
+    m_uart->EVENTS_ERROR = 0UL;
+    m_uart->EVENTS_ENDTX = 0UL;
+    m_uart->EVENTS_ENDRX = 0UL;
+    m_uart->EVENTS_RXDRDY = 0UL;
+    m_uart->EVENTS_TXDRDY = 0UL;
+
+    m_uart->ENABLE = UARTE_ENABLE_ENABLE_Disabled;
+
+    m_uart->INTEN = 0UL;
+
     return DeviceStatus::UNIMPLEMENTED;
 }
 
@@ -165,6 +179,16 @@ DeviceStatus UART::enable_hw_flow_control()
     m_uart->CONFIG |= UARTE_CONFIG_HWFC_Enabled;
 
     return DeviceStatus::SUCCESS;
+}
+
+void UART::abort()
+{
+    // Abort any transfer in progress
+    m_uart->TASKS_STOPRX = 1UL;
+    m_uart->TASKS_STOPTX = 1UL;
+
+    // Purge the RX buffer of any data
+    m_uart->TASKS_FLUSHRX = 1UL;
 }
 
 } // namespace NRF52

@@ -58,6 +58,7 @@ public:
     // UART specific functions (not part of the driver model)
     DeviceStatus set_baud_rate(BaudRate baud);
     DeviceStatus enable_hw_flow_control();
+    void abort();
 
 public:
     void handle_irq() override;
