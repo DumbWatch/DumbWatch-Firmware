@@ -35,6 +35,26 @@ UART::UART(uint32_t base_address, const PinConfiguration& configuration)
     m_uart = reinterpret_cast<NRF_UARTE_Type*>(base_address);
 }
 
+void UART::handle_irq()
+{
+    // Check what interrupt sources were generated
+    if (m_uart->EVENTS_ENDTX == 1UL)
+    {
+        m_uart->EVENTS_ENDTX = 0UL;
+        m_busy = false;
+    }
+    else if (m_uart->EVENTS_ENDRX == 1UL)
+    {
+        m_uart->EVENTS_ENDRX = 0UL;
+        m_busy = false;
+    }
+    else if (m_uart->EVENTS_ERROR == 1UL)
+    {
+        m_uart->EVENTS_ERROR = 0UL;
+        m_busy = false;
+    }
+}
+
 DeviceStatus UART::initialize()
 {
     if (m_initialized)
@@ -102,34 +122,25 @@ DeviceStatus UART::send(const uint8_t* data, size_t count)
     return DeviceStatus::SUCCESS;
 }
 
-DeviceStatus UART::receive(uint8_t*, size_t)
+DeviceStatus UART::receive(uint8_t* data, size_t count)
 {
+    if (data == nullptr || count == 0UL)
+        return DeviceStatus::INVALID_PARAMETER;
+
+    if (m_busy)
+        return DeviceStatus::DEVICE_BUSY;
+
+    m_uart->TXD.PTR = reinterpret_cast<uint32_t>(data);
+    m_uart->TXD.MAXCNT = count;
+
+    // Do transfer
+    m_uart->TASKS_STARTTX = 1UL;
     return DeviceStatus::UNIMPLEMENTED;
 }
 
 DeviceStatus UART::transceive(const uint8_t*, uint8_t*, size_t)
 {
     return DeviceStatus::UNIMPLEMENTED;
-}
-
-void UART::handle_irq()
-{
-    // Check what interrupt sources were generated
-    if (m_uart->EVENTS_ENDTX == 1UL)
-    {
-        m_uart->EVENTS_ENDTX = 0UL;
-        m_busy = false;
-    }
-    else if (m_uart->EVENTS_ENDRX == 1UL)
-    {
-        m_uart->EVENTS_ENDRX = 0UL;
-        m_busy = false;
-    }
-    else if (m_uart->EVENTS_ERROR == 1UL)
-    {
-        m_uart->EVENTS_ERROR = 0UL;
-        m_busy = false;
-    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////
