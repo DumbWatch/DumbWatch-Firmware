@@ -47,7 +47,7 @@ public:
     DeviceStatus set_prescaler(uint8_t prescaler);
     DeviceStatus set_bitmode(BitMode bitmode);
 
-    void set_callback(isr_callback callback){ m_callback = callback; }
+    void set_callback(isr_callback callback) { m_callback = callback; }
 
 private:
     NRF_TIMER_Type* m_peripheral;

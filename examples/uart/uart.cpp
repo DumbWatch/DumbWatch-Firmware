@@ -1,14 +1,14 @@
 /**
  *  Flash LED1
  */
-#include <cstring>
 #include <cstdint>
+#include <cstring>
 #include <drivers/timer/timer.h>
 #include <drivers/uart/uart.h>
 #include <nrf52.h>
 #include <nrf52_bitfields.h>
 
-static NRF52::UART uart(NRF_UARTE0_BASE, {5, 6, 7, 8});
+static NRF52::UART uart(NRF_UARTE0_BASE, { 5, 6, 7, 8 });
 static NRF52::Timer timer0(NRF_TIMER0_BASE, TIMER0_IRQn);
 
 void send_uart_message()

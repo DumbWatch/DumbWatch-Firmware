@@ -38,7 +38,7 @@ DeviceStatus Timer::initialize()
     m_peripheral->INTENSET |= (TIMER_INTENSET_COMPARE0_Enabled << TIMER_INTENSET_COMPARE0_Pos);
 
     m_initialized = true;
-    
+
     return DeviceStatus::SUCCESS;
 }
 
@@ -76,7 +76,7 @@ DeviceStatus Timer::set_bitmode(BitMode mode)
 
     if (m_running)
         return DeviceStatus::DEVICE_BUSY;
-    
+
     m_peripheral->BITMODE &= ~TIMER_BITMODE_BITMODE_Msk;
     m_peripheral->BITMODE |= static_cast<uint8_t>(mode);
 

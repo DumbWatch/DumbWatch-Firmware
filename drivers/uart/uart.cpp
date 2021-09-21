@@ -2,8 +2,8 @@
  * 
  */
 
-#include <nrf52_bitfields.h>
 #include <drivers/uart/uart.h>
+#include <nrf52_bitfields.h>
 
 namespace NRF52
 {
@@ -39,7 +39,7 @@ DeviceStatus UART::initialize()
 {
     if (m_initialized)
         return DeviceStatus::ALREADY_INITIALIZED;
-    
+
     if (m_busy)
         return DeviceStatus::DEVICE_BUSY;
 
@@ -50,18 +50,18 @@ DeviceStatus UART::initialize()
     m_uart->PSEL.RXD = m_configuration.rxd_pin & 31;
 
     // Set pin configuration in GPIO block
-    NRF_P0->PIN_CNF[m_uart->PSEL.RTS] = (GPIO_PIN_CNF_DIR_Output        << GPIO_PIN_CNF_DIR_Pos) | \
-                                        (GPIO_PIN_CNF_INPUT_Disconnect  << GPIO_PIN_CNF_INPUT_Pos) | \
-                                        (GPIO_PIN_CNF_PULL_Disabled     << GPIO_PIN_CNF_PULL_Pos);
-    NRF_P0->PIN_CNF[m_uart->PSEL.TXD] = (GPIO_PIN_CNF_DIR_Output        << GPIO_PIN_CNF_DIR_Pos) | \
-                                        (GPIO_PIN_CNF_INPUT_Disconnect  << GPIO_PIN_CNF_INPUT_Pos) | \
-                                        (GPIO_PIN_CNF_PULL_Disabled     << GPIO_PIN_CNF_PULL_Pos);
-    NRF_P0->PIN_CNF[m_uart->PSEL.CTS] = (GPIO_PIN_CNF_DIR_Input         << GPIO_PIN_CNF_DIR_Pos) | \
-                                        (GPIO_PIN_CNF_PULL_Disabled     << GPIO_PIN_CNF_PULL_Pos);                                       
-    NRF_P0->PIN_CNF[m_uart->PSEL.RXD] = (GPIO_PIN_CNF_DIR_Input         << GPIO_PIN_CNF_DIR_Pos) | \
-                                        (GPIO_PIN_CNF_PULL_Disabled     << GPIO_PIN_CNF_PULL_Pos);     
+    NRF_P0->PIN_CNF[m_uart->PSEL.RTS] = (GPIO_PIN_CNF_DIR_Output << GPIO_PIN_CNF_DIR_Pos) |
+                                        (GPIO_PIN_CNF_INPUT_Disconnect << GPIO_PIN_CNF_INPUT_Pos) |
+                                        (GPIO_PIN_CNF_PULL_Disabled << GPIO_PIN_CNF_PULL_Pos);
+    NRF_P0->PIN_CNF[m_uart->PSEL.TXD] = (GPIO_PIN_CNF_DIR_Output << GPIO_PIN_CNF_DIR_Pos) |
+                                        (GPIO_PIN_CNF_INPUT_Disconnect << GPIO_PIN_CNF_INPUT_Pos) |
+                                        (GPIO_PIN_CNF_PULL_Disabled << GPIO_PIN_CNF_PULL_Pos);
+    NRF_P0->PIN_CNF[m_uart->PSEL.CTS] = (GPIO_PIN_CNF_DIR_Input << GPIO_PIN_CNF_DIR_Pos) |
+                                        (GPIO_PIN_CNF_PULL_Disabled << GPIO_PIN_CNF_PULL_Pos);
+    NRF_P0->PIN_CNF[m_uart->PSEL.RXD] = (GPIO_PIN_CNF_DIR_Input << GPIO_PIN_CNF_DIR_Pos) |
+                                        (GPIO_PIN_CNF_PULL_Disabled << GPIO_PIN_CNF_PULL_Pos);
 
-    NRF_P0->DIR |= (GPIO_DIR_PIN13_Output << GPIO_DIR_PIN13_Pos) | (GPIO_DIR_PIN15_Output << GPIO_DIR_PIN15_Pos);     
+    NRF_P0->DIR |= (GPIO_DIR_PIN13_Output << GPIO_DIR_PIN13_Pos) | (GPIO_DIR_PIN15_Output << GPIO_DIR_PIN15_Pos);
     NRF_P0->OUTSET = (1UL << m_uart->PSEL.TXD);
 
     // Default baud rate to 9600bps
@@ -69,12 +69,12 @@ DeviceStatus UART::initialize()
 
     // Enable the UART
     m_uart->ENABLE = UARTE_ENABLE_ENABLE_Enabled;
-    
+
     // Enable interrupt sources
-    m_uart->INTENSET =  (UARTE_INTEN_ENDRX_Enabled << UARTE_INTEN_ENDRX_Pos) |
-                        (UARTE_INTEN_ENDTX_Enabled << UARTE_INTEN_ENDTX_Pos) |
-                        (UARTE_INTEN_ERROR_Enabled << UARTE_INTEN_ERROR_Pos) |
-                        (UARTE_INTEN_RXTO_Enabled << UARTE_INTEN_RXTO_Pos);
+    m_uart->INTENSET = (UARTE_INTEN_ENDRX_Enabled << UARTE_INTEN_ENDRX_Pos) |
+                       (UARTE_INTEN_ENDTX_Enabled << UARTE_INTEN_ENDTX_Pos) |
+                       (UARTE_INTEN_ERROR_Enabled << UARTE_INTEN_ERROR_Pos) |
+                       (UARTE_INTEN_RXTO_Enabled << UARTE_INTEN_RXTO_Pos);
 
     return DeviceStatus::SUCCESS;
 }
@@ -93,8 +93,8 @@ DeviceStatus UART::send(const uint8_t* data, size_t count)
         return DeviceStatus::DEVICE_BUSY;
 
     // Set up the EASYDMA pointers
-    m_uart->TXD.PTR     = reinterpret_cast<uint32_t>(data);
-    m_uart->TXD.MAXCNT  = count; 
+    m_uart->TXD.PTR = reinterpret_cast<uint32_t>(data);
+    m_uart->TXD.MAXCNT = count;
 
     // Do transfer
     m_uart->TASKS_STARTTX = 1UL;
@@ -147,7 +147,7 @@ DeviceStatus UART::enable_hw_flow_control()
 {
     if (!m_initialized)
         return DeviceStatus::NOT_INITIALIZED;
-    
+
     if (m_busy)
         return DeviceStatus::DEVICE_BUSY;
 
