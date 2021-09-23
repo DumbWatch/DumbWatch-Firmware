@@ -15,7 +15,6 @@
             "armToolchainPath": "E:/VSARM/armcc/bin",
             "device": "nRF52832_xxAA",
             "interface": "swd",
-            "serialNumber": "801036265",
             "runToMain": true,
             "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
         },
@@ -30,7 +29,20 @@
             "armToolchainPath": "E:/VSARM/armcc/bin",
             "device": "nRF52832_xxAA",
             "interface": "swd",
-            "serialNumber": "801036265",
+            "runToMain": true,
+            "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
+        },
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "./examples/uart/uart.elf",
+            "name": "Run UART Test",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "serverpath": "C:/Program Files (x86)/SEGGER/JLink/JLinkGDBServerCL.exe",
+            "armToolchainPath": "E:/VSARM/armcc/bin",
+            "device": "nRF52832_xxAA",
+            "interface": "swd",
             "runToMain": true,
             "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
         },
