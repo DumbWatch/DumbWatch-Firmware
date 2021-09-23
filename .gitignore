@@ -46,3 +46,4 @@ toolchain/*
 *.cxxflags
 *.files
 *.includes
+.vscode/.cortex-debug.peripherals.state.json
