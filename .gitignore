@@ -47,3 +47,4 @@ toolchain/*
 *.files
 *.includes
 .vscode/.cortex-debug.peripherals.state.json
+.vscode/settings.json
