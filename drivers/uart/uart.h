@@ -5,6 +5,10 @@
 #include <drivers/irq_handler.h>
 #include <drivers/serial_device.h>
 #include <nrf52.h>
+#if (USE_FREERTOS == 1)
+    #include <FreeRTOS.h>
+    #include <semphr.h>
+#endif
 
 namespace NRF52
 {
@@ -68,6 +72,10 @@ private:
     BaudRate m_baud_rate;   // Current baud rate
     PinConfiguration m_configuration;
     bool m_busy { false }; // Is the device currently busy?
+
+#if (USE_FREERTOS == 1)
+    SemaphoreHandle_t m_device_mutex;
+#endif
 };
 
 } // namespace NRF52

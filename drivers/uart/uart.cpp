@@ -42,6 +42,9 @@ void UART::handle_irq()
     {
         m_uart->EVENTS_ENDTX = 0UL;
         m_busy = false;
+#if (USE_FREERTOS == 1)
+        xSemaphoreGive(m_device_mutex);
+#endif
     }
     else if (m_uart->EVENTS_ENDRX == 1UL)
     {
@@ -94,6 +97,10 @@ DeviceStatus UART::initialize()
                        (UARTE_INTEN_ERROR_Enabled << UARTE_INTEN_ERROR_Pos) |
                        (UARTE_INTEN_RXTO_Enabled << UARTE_INTEN_RXTO_Pos);
 
+#if (USE_FREERTOS == 1)
+    m_device_mutex = xSemaphoreCreateMutex();
+#endif
+
     return DeviceStatus::SUCCESS;
 }
 
@@ -123,6 +130,11 @@ DeviceStatus UART::send(const uint8_t* data, size_t count)
 
     if (m_busy)
         return DeviceStatus::DEVICE_BUSY;
+
+#if (USE_FREERTOS == 1)
+    if (xSemaphoreTake(m_device_mutex, 0) != pdTRUE)
+        return DeviceStatus::DEVICE_BUSY;
+#endif
 
     // Set up the EASYDMA pointers
     m_uart->TXD.PTR = reinterpret_cast<uint32_t>(data);

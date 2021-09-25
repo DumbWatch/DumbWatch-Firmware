@@ -30,6 +30,7 @@ CXXFLAGS += -I../hello_world
 CXXFLAGS += -I$(FREERTOS_PATH)/source/include
 CXXFLAGS += -I$(FREERTOS_PATH)/portable/GCC/nrf52
 CXXFLAGS += -I$(FREERTOS_PATH)/portable/CMSIS/nrf52
+CXXFLAGS += -DUSE_FREERTOS
 
 CFLAGS += -I../hello_world
 CFLAGS += -I$(FREERTOS_PATH)/source/include
