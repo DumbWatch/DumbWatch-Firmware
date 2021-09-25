@@ -46,5 +46,19 @@
             "runToMain": true,
             "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
         },
+        {
+            "cwd": "${workspaceRoot}",
+            "executable": "./examples/freertos/hello_world/hello_world.elf",
+            "name": "Run FreeRTOS Example",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "serverpath": "C:/Program Files (x86)/SEGGER/JLink/JLinkGDBServerCL.exe",
+            "armToolchainPath": "E:/VSARM/armcc/bin",
+            "device": "nRF52832_xxAA",
+            "interface": "swd",
+            "runToMain": true,
+            "svdFile": "${workspaceRoot}/nordic/nrf52.svd"
+        },
     ]
 }

@@ -7,7 +7,9 @@
                 "${workspaceFolder}\\nordic\\include",
                 "${workspaceFolder}\\toolchain\\arm-none-eabi\\include",
                 "${workspaceFolder}\\fw\\**",
-                "${workspaceFolder}\\drivers\\**"
+                "${workspaceFolder}\\drivers\\**",
+                "${workspaceFolder}\\third_party\\freertos\\source\\include",
+                "${workspaceFolder}\\third_party\\freertos\\config"
             ],
             "defines": [],
             "windowsSdkVersion": "10.0.18362.0",
