@@ -47,7 +47,7 @@ public:
 public:
     UART() = delete;
     UART(uint32_t base_address, const PinConfiguration& configuration);
-    ~UART() {}
+    ~UART() { uninitialize(); }
 
     DeviceStatus initialize() override;
     DeviceStatus uninitialize() override;

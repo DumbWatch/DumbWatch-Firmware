@@ -64,8 +64,6 @@ DeviceStatus UART::initialize()
         return DeviceStatus::DEVICE_BUSY;
 
     // Set pins from configuration
-    //m_uart->PSEL.RTS = m_configuration.rts_pin & 31;
-    //m_uart->PSEL.CTS = m_configuration.cts_pin & 31;
     m_uart->PSEL.TXD = m_configuration.txd_pin & 31;
     m_uart->PSEL.RXD = m_configuration.rxd_pin & 31;
 
@@ -176,6 +174,8 @@ DeviceStatus UART::enable_hw_flow_control()
     if (m_busy)
         return DeviceStatus::DEVICE_BUSY;
 
+    m_uart->PSEL.RTS = m_configuration.rts_pin & 31;
+    m_uart->PSEL.CTS = m_configuration.cts_pin & 31;
     m_uart->CONFIG |= UARTE_CONFIG_HWFC_Enabled;
 
     return DeviceStatus::SUCCESS;
