@@ -8,10 +8,15 @@
                 "${workspaceFolder}\\toolchain\\arm-none-eabi\\include",
                 "${workspaceFolder}\\fw\\**",
                 "${workspaceFolder}\\drivers\\**",
+                "${workspaceFolder}\\os\\include",
                 "${workspaceFolder}\\third_party\\freertos\\source\\include",
-                "${workspaceFolder}\\third_party\\freertos\\config"
+                "${workspaceFolder}\\third_party\\freertos\\config",
+                "${workspaceFolder}\\third_party\\freertos\\portable\\ARM\\nrf52",
+                "${workspaceFolder}\\third_party\\freertos\\portable\\CMSIS\\nrf52"
             ],
-            "defines": [],
+            "defines": [
+                "USE_FREERTOS"
+            ],
             "windowsSdkVersion": "10.0.18362.0",
             "compilerPath": "${workspaceFolder}\\toolchain\\bin\\arm-none-eabi-gcc",
             "cStandard": "c17",
