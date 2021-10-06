@@ -21,7 +21,8 @@
             "compilerPath": "${workspaceFolder}\\toolchain\\bin\\arm-none-eabi-gcc",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-arm"
+            "intelliSenseMode": "gcc-arm",
+            "configurationProvider": "nrf-connect"
         }
     ],
     "version": 4
