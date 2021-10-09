@@ -37,11 +37,14 @@ UART::UART(uint32_t base_address, const PinConfiguration& configuration)
 
 void UART::handle_irq()
 {
+    uint32_t events = 0UL;
+
     // Check what interrupt sources were generated
     if (m_uart->EVENTS_ENDTX == 1UL)
     {
         m_uart->EVENTS_ENDTX = 0UL;
         m_busy = false;
+        events |= EVENT_SEND_COMPLETE;
 #if (USE_FREERTOS == 1)
         xSemaphoreGive(m_device_mutex);
 #endif
@@ -50,12 +53,16 @@ void UART::handle_irq()
     {
         m_uart->EVENTS_ENDRX = 0UL;
         m_busy = false;
+        events |= EVENT_RECEIVE_COMPLETE;
     }
     else if (m_uart->EVENTS_ERROR == 1UL)
     {
         m_uart->EVENTS_ERROR = 0UL;
         m_busy = false;
     }
+
+    if (m_callback != nullptr)
+        m_callback(events);
 }
 
 DeviceStatus UART::initialize()
@@ -88,14 +95,14 @@ DeviceStatus UART::initialize()
     // Default baud rate to 9600bps
     m_uart->BAUDRATE = s_baud_rates[3];
 
+    // Enable interrupt sources
+    m_uart->INTEN =     (UARTE_INTEN_ENDRX_Enabled << UARTE_INTEN_ENDRX_Pos) |
+                        (UARTE_INTEN_ENDTX_Enabled << UARTE_INTEN_ENDTX_Pos) |
+                        (UARTE_INTEN_ERROR_Enabled << UARTE_INTEN_ERROR_Pos) |
+                        (UARTE_INTEN_RXTO_Enabled << UARTE_INTEN_RXTO_Pos);
+
     // Enable the UART
     m_uart->ENABLE = UARTE_ENABLE_ENABLE_Enabled;
-
-    // Enable interrupt sources
-    m_uart->INTENSET = (UARTE_INTEN_ENDRX_Enabled << UARTE_INTEN_ENDRX_Pos) |
-                       (UARTE_INTEN_ENDTX_Enabled << UARTE_INTEN_ENDTX_Pos) |
-                       (UARTE_INTEN_ERROR_Enabled << UARTE_INTEN_ERROR_Pos) |
-                       (UARTE_INTEN_RXTO_Enabled << UARTE_INTEN_RXTO_Pos);
 
 #if (USE_FREERTOS == 1)
     m_device_mutex = xSemaphoreCreateMutex();
@@ -154,12 +161,13 @@ DeviceStatus UART::receive(uint8_t* data, size_t count)
     if (m_busy)
         return DeviceStatus::DEVICE_BUSY;
 
-    m_uart->TXD.PTR = reinterpret_cast<uint32_t>(data);
-    m_uart->TXD.MAXCNT = count;
+    m_uart->RXD.PTR = reinterpret_cast<uint32_t>(data);
+    m_uart->RXD.MAXCNT = count;
 
     // Do transfer
-    m_uart->TASKS_STARTTX = 1UL;
-    return DeviceStatus::UNIMPLEMENTED;
+    m_uart->TASKS_STARTRX = 1UL;
+
+    return DeviceStatus::SUCCESS;
 }
 
 DeviceStatus UART::transceive(const uint8_t*, uint8_t*, size_t)

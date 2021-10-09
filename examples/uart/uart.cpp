@@ -3,40 +3,48 @@
  */
 #include <cstdint>
 #include <cstring>
-#include <drivers/timer/timer.h>
 #include <drivers/uart/uart.h>
 #include <nrf52.h>
 #include <nrf52_bitfields.h>
 
-static NRF52::UART uart(NRF_UARTE0_BASE, { 5, 6, 7, 8 });
-static NRF52::Timer timer0(NRF_TIMER0_BASE, TIMER0_IRQn);
+using namespace NRF52;
 
-void send_uart_message()
+static UART uart(NRF_UARTE0_BASE, { 5, 6, 7, 8 });
+
+static bool receive_complete = false;
+
+void uart_callback(uint32_t events)
 {
-    uint8_t msg[17] = "Hello, World!\r\n\0";
-    uart.send(reinterpret_cast<const uint8_t*>(&msg[0]), 15);
+    if ((events & UART::EVENT_RECEIVE_COMPLETE) == UART::EVENT_RECEIVE_COMPLETE)
+    {
+        receive_complete = true;
+    }
 }
 
 void init()
 {
     uart.initialize();
     uart.set_baud_rate(NRF52::UART::BaudRate::Baud115200); // 11.52bps
-    uart.enable_hw_flow_control();
-
-    timer0.initialize();
-    timer0.set_bitmode(NRF52::Timer::BitMode::Bits16);
-    timer0.set_max_ticks<uint16_t>(0xffff);
-    timer0.set_prescaler(6);
-    timer0.set_callback(&send_uart_message);
-    timer0.start();
+    uart.set_callback(&uart_callback);
 }
 
 int main(void)
 {
+    uint8_t msg[17] = "Hello, World!\r\n\0";
+    uint8_t recv_buf[15];
+    uint32_t counter = 0xfffff;
+
     init();
 
     for (;;)
     {
-        __WFI();
+        receive_complete = false;
+        uart.send(reinterpret_cast<const uint8_t*>(&msg[0]), 15);
+        uart.receive(&recv_buf[0], 15);
+
+        while (receive_complete == false);
+        while(counter--);
+
+        counter = 0xfffff;
     }
 }

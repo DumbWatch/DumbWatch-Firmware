@@ -7,6 +7,7 @@
 #include <cstdint>
 
 typedef void (*isr_callback)(void);
+typedef void (*isr_callback_event)(uint32_t event_flags);
 
 namespace NRF52
 {

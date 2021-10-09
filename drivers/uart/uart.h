@@ -19,6 +19,10 @@ namespace NRF52
 class UART : public SerialDevice, public IRQHandler
 {
 public:
+    static constexpr uint32_t EVENT_SEND_COMPLETE = 0x00000001UL;
+    static constexpr uint32_t EVENT_RECEIVE_COMPLETE = 0x00000002UL;
+
+public:
     // FIXME: Should this be part of the driver model???
     struct PinConfiguration
     {
@@ -62,6 +66,7 @@ public:
     // UART specific functions (not part of the driver model)
     DeviceStatus set_baud_rate(BaudRate baud);
     DeviceStatus enable_hw_flow_control();
+    void set_callback(isr_callback_event callback) { m_callback = callback; }
     void abort();
 
 public:
@@ -71,6 +76,7 @@ private:
     NRF_UARTE_Type* m_uart; // Pointer to our peripheral
     BaudRate m_baud_rate;   // Current baud rate
     PinConfiguration m_configuration;
+    isr_callback_event m_callback { nullptr };
     bool m_busy { false }; // Is the device currently busy?
 
 #if (USE_FREERTOS == 1)
